@@ -7,18 +7,15 @@ replicaCount: 1
 image:
   repository: 038062473746.dkr.ecr.us-east-1.amazonaws.com/circleci-petclinic-frontend
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
   tag: latest
-
-imagePullSecrets: []
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 autoscaling:
-  enabled: false
+  enabled: true
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80

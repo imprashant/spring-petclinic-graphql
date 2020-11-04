@@ -1,15 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm.fullname" . }}
-  labels:
-    {{- include "helm.labels" . | nindent 4 }}
+  name: circleci-petclinic-frontend
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - port: 8080
   selector:
-    {{- include "helm.selectorLabels" . | nindent 4 }}
+    app: circleci-petclinic-frontend
