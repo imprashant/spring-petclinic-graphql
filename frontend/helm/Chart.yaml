@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: circleci-petclinic-frontend
 description: A Helm chart for petclinic-frontend
 type: application

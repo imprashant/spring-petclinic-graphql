@@ -78,7 +78,7 @@ jobs:
       - helm/install-helm-chart:
           helm-version: v3.2.4
           chart: ./frontend/helm
-          namespace: circle-ci
+          namespace: circleci-dev
           release-name: circleci-petclinic-frontend
 
   build-backend:
