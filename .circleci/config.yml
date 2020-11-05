@@ -77,7 +77,7 @@ jobs:
           cluster-authentication-role-arn: arn:aws:iam::038062473746:role/CICDHackathon
       - helm/install-helm-on-cluster:
           enable-cluster-wide-admin-access: true
-      - helm/upgrade-helm-chart:
+      - helm/install-helm-chart:
           chart: ./frontend/helm
           namespace: circle-ci
           release-name: circleci-petclinic-frontend
