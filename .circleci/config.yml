@@ -1,6 +1,9 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.3.0
+  aws-eks: circleci/aws-eks@1.0.2
+  kubernetes: circleci/kubernetes@0.4.0
+  helm: circleci/helm@1.0.0
 executors:
   frontend-executor:
     docker:
@@ -54,15 +57,30 @@ jobs:
       - run:
           name: "Build Docker image"
           command: docker build -t circleci-petclinic-frontend frontend/
-      - run:
-          name: "Docker image validation for frontend"
-          command: |
-            docker run -d --name circleci-petclinic-frontend circleci-petclinic-frontend
-            docker run --network container:circleci-petclinic-frontend appropriate/curl --retry 10 --retry-connrefused http://localhost:8080
+#      - run:
+#          name: "Docker image validation for frontend"
+#          command: |
+#            docker run -d --name circleci-petclinic-frontend circleci-petclinic-frontend
+#            docker run --network container:circleci-petclinic-frontend appropriate/curl --retry 10 --retry-connrefused http://localhost:8080
       - tag-and-push-image:
           image-name: circleci-petclinic-frontend
           image-tag: latest
           repository-name: circleci-petclinic-frontend
+
+  deploy-frontend:
+    executor: aws-eks/python3
+    steps:
+      - checkout
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: basic-cluster
+          cluster-authentication-role-arn: arn:aws:iam::038062473746:role/CICDHackathon
+      - helm/upgrade-helm-chart:
+          helm-version: v3.2.4
+          chart: ./frontend/helm/circleci-petclinic-frontend
+          namespace: circleci-dev
+          release-name: circleci-petclinic-frontend
+          force: true
 
   build-backend:
     executor: backend-executor
@@ -76,11 +94,11 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run: docker build -t circleci-petclinic-backend backend/
-      - run:
-          name: "Docker image validation for backend"
-          command: |
-            docker run -d --name circleci-petclinic-backend circleci-petclinic-backend
-            docker run --network container:circleci-petclinic-backend appropriate/curl --retry 10 --retry-connrefused http://localhost:8080
+#      - run:
+#          name: "Docker image validation for backend"
+#          command: |
+#            docker run -d -p 8181:8080 --name circleci-petclinic-backend circleci-petclinic-backend
+#            docker run --network container:circleci-petclinic-backend appropriate/curl --retry 10 --retry-connrefused http://localhost:8181
       - tag-and-push-image:
           image-name: circleci-petclinic-backend
           image-tag: latest
@@ -88,8 +106,13 @@ jobs:
 
 workflows:
   version: 2
-
   build-frontend-backend:
     jobs:
       - build-frontend
       - build-backend
+      - deploy-frontend:
+          requires:
+            - build-frontend
+          filters:
+            branches:
+              only: master

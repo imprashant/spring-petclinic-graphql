@@ -1,0 +1,5 @@
+apiVersion: v2
+name: circleci-petclinic-frontend
+description: A Helm chart for petclinic-frontend
+type: application
+version: 1.0.0
