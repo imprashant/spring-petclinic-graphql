@@ -81,7 +81,6 @@ jobs:
           namespace: circleci-dev
           release-name: circleci-petclinic-frontend
           force: true
-          dry-run: true
 
   build-backend:
     executor: backend-executor
