@@ -76,7 +76,7 @@ jobs:
           cluster-name: basic-cluster
           cluster-authentication-role-arn: arn:aws:iam::038062473746:role/CICDHackathon
       - helm/install-helm-on-cluster:
-          - enable-cluster-wide-admin-access: true
+          enable-cluster-wide-admin-access: true
       - helm/upgrade-helm-chart:
           chart: ./frontend/helm
           namespace: circle-ci
