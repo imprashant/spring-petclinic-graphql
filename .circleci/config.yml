@@ -113,3 +113,6 @@ workflows:
       - deploy-frontend:
           requires:
             - build-frontend
+          filters:
+            branches:
+              only: master
