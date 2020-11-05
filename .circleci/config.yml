@@ -64,6 +64,7 @@ jobs:
           image-name: circleci-petclinic-frontend
           image-tag: latest
           repository-name: circleci-petclinic-frontend
+
   deploy-frontend:
     executor: aws-eks/python3
     steps:
@@ -100,10 +101,10 @@ jobs:
 
 workflows:
   version: 2
-
   build-frontend-backend:
     jobs:
       - build-frontend
       - build-backend
       - deploy-frontend:
-          requires: build-frontend
+          requires:
+            - build-frontend
