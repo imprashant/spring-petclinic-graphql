@@ -114,7 +114,7 @@ jobs:
           cluster-authentication-role-arn: arn:aws:iam::038062473746:role/CICDHackathon
       - helm/upgrade-helm-chart:
           helm-version: v3.2.4
-          chart: ./frontend/helm/circleci-petclinic-backend
+          chart: ./backend/helm/circleci-petclinic-backend
           namespace: circleci-dev
           release-name: circleci-petclinic-backend
           force: true
