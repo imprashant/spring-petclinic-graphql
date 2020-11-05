@@ -75,7 +75,7 @@ jobs:
           cluster-authentication-role-arn: arn:aws:iam::038062473746:role/CICDHackathon
       - run:
           command: |
-            kubectl get services
+            kubectl cluster-info
           name: Test cluster
 
   build-backend:
