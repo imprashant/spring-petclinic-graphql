@@ -135,3 +135,6 @@ workflows:
       - deploy-backend:
           requires:
             - build-backend
+          filters:
+            branches:
+              only: master
