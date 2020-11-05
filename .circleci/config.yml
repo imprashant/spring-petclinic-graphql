@@ -64,6 +64,9 @@ jobs:
           image-name: circleci-petclinic-frontend
           image-tag: latest
           repository-name: circleci-petclinic-frontend
+  deploy-frontend:
+    executor: aws-eks/python3
+    steps:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: basic-cluster
