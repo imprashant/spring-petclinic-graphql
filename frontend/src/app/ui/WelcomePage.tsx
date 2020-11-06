@@ -35,7 +35,7 @@ const WelcomePage = () =>
       </div>
       <div className="col-md-9">
         <h1 style={{ fontSize: "32px", fontWeight: "bold", lineHeight: "1.5" }}>Welcome</h1>
-        <h2>Spring PetClinic - React/GraphQL Edition</h2>
+        <h2>Spring PetClinic - React/GraphQL Edition - Circle CI</h2>
         <h3>
           <a href={githubUrl}>
             {githubUrl}
