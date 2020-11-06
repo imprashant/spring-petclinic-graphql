@@ -11,10 +11,10 @@ metadata:
   {{- end }}
 spec:
   rules:
-    - host: {{ .Values.ingress.hosts }}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /circle-ci/frontend
+          - path: {{ .Values.ingress.path }}
             backend:
               serviceName: {{ .Chart.Name }}
               servicePort: {{ .Values.service.port }}
